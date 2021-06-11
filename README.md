@@ -26,12 +26,15 @@
 5. Connect Heroku to Git repository <br>
    In Heroku, set GitHub repository the App connected to
 
-6. Share App key with Heroku
+6. Deploy App with Heroku
    - in terminal under project directory, type in: <br>
    <b>php artisan key:generate --show</b> <br>
    this command will show the APP_KEY value, this key value pair can also be found in .env file in Laravel project. <br>
    
    - in Heroku Settings, editing "Config Vars", set APP_KEY to be the key value shown in the previous step. <br>
+   - under laravel project create a file call "Procfile", this will help Heroku to identify the document root path <br>
+     in terminal type in <br>
+     <b>echo "web: vendor/bin/heroku-php-apache2 public/" > Procfile</b> <br>
    - click "Open App" to see if Laravel project works in https://accentgrouptest.herokuapp.com/ <br>
    - in Config Vars, set APP_NAME to be "AGMgmtConsole", APP_ENV to be "production", APP_URL to be "https://accentgrouptest.herokuapp.com/" <br>
 
@@ -48,12 +51,21 @@
    $ php artisan ui vue <br>
    $ npm install && npm run dev <br>
 
+8. Enable node.js in heroku
+   $ heroku login <br>
+   $ heroku buildpacks:add heroku/nodejs -a accentgrouptest <br>
+   $ heroku config:set NPM_CONFIG_PRODUCTION=false -a accentgrouptest <br>
+   add "postinstall": "npm run production", in package.json "scripts"
+   $ heroku buildpacks -a accentgrouptest (to ensure that heroku/php and heroku/nodejs are listed)
+   
 ## Tasks
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
+1. create models
+   - php artisan make:model Customer
+   - php artisan make:model Sale
+   - php artisan make:model Product
+   - php artisan make:model Employee
+   
 ## Laravel Sponsors
 
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).

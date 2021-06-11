@@ -1,17 +1,38 @@
 # Workflows
 ## Preparation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Sign up Heroku
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. Create a Heroku App
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. Create Laravel App
+   - on local machine (mine is MacOS) terminal, go to project folder, create a Laravel project with composer
+   cmd: 
+   <b>composer create-project --prefer-dist Laravel/Laravel AGMgmtConsole</b>
+  
+   - in terminal, type in
+     <b>php artisan serve</b>
+     check in the browser localhost:8000 to see if laravel works fine.
+ 
+4. Initialize Git
+   - create a new repository on GitHub, and copy the URL
+   - in terminal under project folder, do the following: 
+     $ git init -b main
+     $ git add .
+     $ git commit -m "Initial commit"
+     $ git remote add origin <URL>
+     $ git push -u origin main
+
+5. Connect Heroku to Git repository
+   In Heroku, set GitHub repository the App connected to
+
+6. Share App key with Heroku
+   - in terminal under project directory, type in:
+   <b>php artisan key:generate --show</b>
+   this command will show the APP_KEY value, this key value pair can also be found in .env file in Laravel project.
+   
+   - in Heroku Settings, editing "Config Vars", set APP_KEY to be the key value shown in the previous step.
+   - click "Open App" to see if Laravel project works in https://accentgrouptest.herokuapp.com/
 
 ## Learning Laravel
 

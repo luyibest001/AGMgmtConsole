@@ -6,33 +6,33 @@
 2. Create a Heroku App
 
 3. Create Laravel App
-   - on local machine (mine is MacOS) terminal, go to project folder, create a Laravel project with composer
-   cmd: 
+   - on local machine (mine is MacOS) terminal, go to project folder, create a Laravel project with composer <br>
+   cmd: <br>
    <b>composer create-project --prefer-dist Laravel/Laravel AGMgmtConsole</b>
   
-   - in terminal, type in
-     <b>php artisan serve</b>
+   - in terminal, type in <br>
+     <b>php artisan serve</b> <br>
      check in the browser localhost:8000 to see if laravel works fine.
  
-4. Initialize Git
+4. Initialize Git <br>
    - create a new repository on GitHub, and copy the URL
-   - in terminal under project folder, do the following: 
-     $ git init -b main
-     $ git add .
-     $ git commit -m "Initial commit"
-     $ git remote add origin <URL>
-     $ git push -u origin main
+   - in terminal under project folder, do the following: <br>
+     $ git init -b main <br>
+     $ git add . <br>
+     $ git commit -m "Initial commit" <br>
+     $ git remote add origin <URL> <br>
+     $ git push -u origin main <br>
 
-5. Connect Heroku to Git repository
+5. Connect Heroku to Git repository <br>
    In Heroku, set GitHub repository the App connected to
 
 6. Share App key with Heroku
-   - in terminal under project directory, type in:
-   <b>php artisan key:generate --show</b>
-   this command will show the APP_KEY value, this key value pair can also be found in .env file in Laravel project.
+   - in terminal under project directory, type in: <br>
+   <b>php artisan key:generate --show</b> <br>
+   this command will show the APP_KEY value, this key value pair can also be found in .env file in Laravel project. <br>
    
-   - in Heroku Settings, editing "Config Vars", set APP_KEY to be the key value shown in the previous step.
-   - click "Open App" to see if Laravel project works in https://accentgrouptest.herokuapp.com/
+   - in Heroku Settings, editing "Config Vars", set APP_KEY to be the key value shown in the previous step. <br>
+   - click "Open App" to see if Laravel project works in https://accentgrouptest.herokuapp.com/ <br>
 
 ## Learning Laravel
 

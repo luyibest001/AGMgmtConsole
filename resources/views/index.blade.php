@@ -1,5 +1,5 @@
 <head>
-    <script src="/js/app.js" defer></script>
+    <script src="https://accentgrouptest.herokuapp.com/js/app.js" defer></script>
 </head>
 <div id="app">
     <example-component></example-component>

@@ -33,8 +33,22 @@
    
    - in Heroku Settings, editing "Config Vars", set APP_KEY to be the key value shown in the previous step. <br>
    - click "Open App" to see if Laravel project works in https://accentgrouptest.herokuapp.com/ <br>
+   - in Config Vars, set APP_NAME to be "AGMgmtConsole", APP_ENV to be "production", APP_URL to be "https://accentgrouptest.herokuapp.com/" <br>
 
-## Learning Laravel
+7. Setup Heroku PostgreSQL database
+   - go to "Resources" tab in Heroku dashboard. 
+   - search in add-ons "postgres", select "Heroku Postgres"
+   - go to "Heroku Postgres", under "Settings" tab, there is database credentials.
+   - edit file "AGMgmtConsole/config/database.php" and .env, set env constant and create a new database connection "AGMgmt"
+   
+   
+7. Install Vue in Laravel
+   in terminal: <br>
+   $ composer require laravel/ui <br>
+   $ php artisan ui vue <br>
+   $ npm install && npm run dev <br>
+
+## Tasks
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 

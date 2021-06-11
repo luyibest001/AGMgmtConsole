@@ -63,6 +63,22 @@ return [
             ]) : [],
         ],
 
+        'AGMgmt' => [
+            'driver' => 'pgsql',
+            'url' => env('AGMGMT_DATABASE_URL'),
+            'host' => env('AGMGMT_DB_HOST', 'ec2-3-233-7-12.compute-1.amazonaws.com'),
+            'port' => env('AGMGMT_DB_PORT', '5432'),
+            'database' => env('AGMGMT_DB_DATABASE', 'd43mc37lq7u9ef'),
+            'username' => env('AGMGMT_DB_USERNAME', 'jlkwrkruyccxrb'),
+            'password' => env('AGMGMT_DB_PASSWORD', '9c721126d066987f8574d6e857e4d9931b0b4ad37f6b9c37556050b56187aa72'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+            'sticky' => true,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

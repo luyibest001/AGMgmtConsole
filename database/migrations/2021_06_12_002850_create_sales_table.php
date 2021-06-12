@@ -14,8 +14,12 @@ class CreateSalesTable extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->increments('id');
+            $table->string('invoiceId');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('sales_person_id')->references('id')->on('employees');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->date('date');
         });
     }
 

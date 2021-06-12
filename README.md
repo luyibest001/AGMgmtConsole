@@ -75,7 +75,11 @@
    - parse xls file and create a record for each row
    - call four seeders from DatabaseSeeder class by "php artisan db:seed"
 
-4.  
+4. Login Page
+
+5. Dashboard Page
+
+6. DataGrid Page 
    
 ## Laravel Sponsors
 

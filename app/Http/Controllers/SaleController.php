@@ -19,7 +19,7 @@ class SaleController extends Controller
      *
      * */
     public function getDayTotalsByDateRange(Request $request){
-        $sales = Sale::select('date', DB::raw('SUM(price) as total'))
+        $sales = Sale::select('date', \DB::raw('SUM(price) as total'))
                      ->join('products', 'product_id','=','products.id')
                      ->groupBy('date')
                      ->orderBy('date')

@@ -61,10 +61,10 @@
 ## Tasks
 
 1. create models
-   - php artisan make:model Customer
-   - php artisan make:model Sale
-   - php artisan make:model Product
-   - php artisan make:model Employee
+   - php artisan make:model Customer -m
+   - php artisan make:model Sale -m
+   - php artisan make:model Product -m
+   - php artisan make:model Employee -m
    
 ## Laravel Sponsors
 

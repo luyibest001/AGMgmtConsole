@@ -43,8 +43,8 @@
    - search in add-ons "postgres", select "Heroku Postgres"
    - go to "Heroku Postgres", under "Settings" tab, there is database credentials.
    - edit file "AGMgmtConsole/config/database.php" and .env, set env constant and create a new database connection "AGMgmt"
-   
-   
+   - in Laravel, set default database connection to AGMgmt
+  
 7. Install Vue in Laravel
    in terminal: <br>
    $ composer require laravel/ui <br>
@@ -60,11 +60,18 @@
    
 ## Tasks
 
-1. create models
+1. Create models
    - php artisan make:model Customer -m
    - php artisan make:model Sale -m
    - php artisan make:model Product -m
    - php artisan make:model Employee -m
+
+2. Create tables with migrations file
+   - define columns in each migration file
+   - php artisan migration
+
+3. Create seeder for each model
+   - e.g. php artisan make:seeder CustomerSeeder
    
 ## Laravel Sponsors
 

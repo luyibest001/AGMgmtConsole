@@ -70,8 +70,12 @@
    - define columns in each migration file
    - php artisan migration
 
-3. Create seeder for each model
+3. Create seeder for each model and import data into database
    - e.g. php artisan make:seeder CustomerSeeder
+   - parse xls file and create a record for each row
+   - call four seeders from DatabaseSeeder class by "php artisan db:seed"
+
+4.  
    
 ## Laravel Sponsors
 

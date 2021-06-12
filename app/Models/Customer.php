@@ -43,4 +43,11 @@ class Customer extends Model
      * @var array
      */
     protected $fillable = ['first_name','last_name','full_name','email','gender','street','city'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }

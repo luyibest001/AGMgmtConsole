@@ -42,4 +42,11 @@ class Product extends Model
      * @var array
      */
     protected $fillable = ['name','price'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }

@@ -21,6 +21,9 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('login-component', require('./components/LoginComponent.vue'));
+Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
+Vue.component('datagrid-component', require('./components/DataGridComponent.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,4 +35,16 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+});
+
+const login = new Vue({
+    el: '#login',
+});
+
+const dashboard = new Vue({
+    el: '#dashboard',
+});
+
+const datagrid = new Vue({
+    el: '#datagrid',
 });

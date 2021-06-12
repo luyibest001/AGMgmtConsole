@@ -42,4 +42,11 @@ class Sale extends Model
      * @var array
      */
     protected $fillable = ['invoiceId','product_id','sales_person_id','customer_id','date'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }

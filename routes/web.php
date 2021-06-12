@@ -17,4 +17,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/dashboard', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
+//Route::get('/dashboard', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
+Route::get('/dashboard', function (){
+    return view('dashboard');
+});

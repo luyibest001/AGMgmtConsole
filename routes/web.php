@@ -14,10 +14,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    $user = session('user');
+    if(!isset($user)){
+        return redirect()->route('login-page');
+    }else{
+        return view('index');
+    }
+})->name('home-page');
+
+Route::prefix('login')->group(function () {
+    Route::get('', function () {
+        $user = session('user');
+        if(isset($user)){
+            return redirect('/');
+        }
+        return view('login');
+    })->name('login-page');
+
+    Route::post('', 'App\Http\Controllers\UserController@doLogin');
 });
+
+Route::get('logout', array('uses' => 'App\Http\Controllers\UserController@doLogout'));
 
 //Route::get('/dashboard', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
 Route::get('/dashboard', function (){
     return view('dashboard');
 });
+
+

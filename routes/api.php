@@ -16,8 +16,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     //return $request->user();
-    Route::get('/sales/dayTotals', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
+    Route::get('sales/dayTotals', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
 });
 
+Route::prefix('sales')->group(function () {
+    Route::get('dayTotals', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
+
+    Route::get('lastMonthDayTotals', 'App\Http\Controllers\SaleController@getLastMonth');
+});
+
+Route::prefix('user')->group(function(){
+    Route::get('', 'App\Http\Controllers\UserController@getUser');
+});
 
 

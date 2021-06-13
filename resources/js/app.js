@@ -6,8 +6,12 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue').default;
+window.Vue = require('vue');
 
+import Vue from 'vue'
+import vuetify from './plugins/vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import VueGoogleCharts from 'vue-google-charts'
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,10 +24,7 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('login-component', require('./components/LoginComponent.vue'));
-Vue.component('dashboard-component', require('./components/DashboardComponent.vue'));
-Vue.component('datagrid-component', require('./components/DataGridComponent.vue'));
+Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,17 +35,11 @@ Vue.component('datagrid-component', require('./components/DataGridComponent.vue'
 
 
 const app = new Vue({
+    vuetify,
     el: '#app',
 });
 
-const login = new Vue({
-    el: '#login',
-});
-
 const dashboard = new Vue({
+    vuetify,
     el: '#dashboard',
-});
-
-const datagrid = new Vue({
-    el: '#datagrid',
 });

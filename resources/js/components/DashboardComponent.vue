@@ -96,21 +96,21 @@
                 <div class="row">
                     <div class="large-4 columns">
                         <label for="start">Select Product</label>
-                        <select v-model="selectedProduct">
+                        <select v-model="selectedProduct" style="border: 1px solid #ccc!important; border-radius: 5px;">
                             <option selected value="">Select Product</option>
                             <option v-for="product in products" :value="product.id">{{product.name}}</option>
                         </select>
                     </div>
                     <div class="large-4 columns">
                         <label for="end">Select Customer</label>
-                        <select v-model="selectedCustomer">
+                        <select v-model="selectedCustomer" style="border: 1px solid #ccc!important; border-radius: 5px;">
                             <option selected value="">Select Customer</option>
                             <option v-for="customer in customers" :value="customer.id">{{customer.full_name}}</option>
                         </select>
                     </div>
                     <div class="large-4 columns">
                         <label for="end">Employee</label>
-                        <select v-model="selectedEmployee">
+                        <select v-model="selectedEmployee" style="border: 1px solid #ccc!important; border-radius: 5px;">
                             <option selected value="">Select Employee</option>
                             <option v-for="employee in employees" :value="employee.id">{{employee.name}}</option>
                         </select>

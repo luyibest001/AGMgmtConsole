@@ -96,56 +96,92 @@ class SaleController extends Controller
         return response()->json(['message'=>'unauthenticated'], 403);*/
     }
 
-    public function getLastMonth(){
-        $sale = Sale::select('date', \DB::raw('SUM(price) as total'))
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getByDateRange(Request $request){
+        $start = $request->start;
+        $end = $request->end;
+
+        if(empty($start) && empty($end)){
+            $sale = Sale::select('date', \DB::raw('SUM(price) as total'))
+                ->join('products', 'product_id','=','products.id')
+                ->groupBy('date')
+                ->orderBy('date','desc')
+                ->first();
+            $latestDate = strtotime($sale->date);
+            $firstDayOfTheMonth = date('Y-m-01', $latestDate);
+            $lastDayOfTheMonth = date('Y-m-t', $latestDate);
+            $salesTotal = Sale::select('date', \DB::raw('SUM(price) as total'))
+                ->join('products', 'product_id','=','products.id')
+                ->whereBetween('date', [$firstDayOfTheMonth,$lastDayOfTheMonth])
+                ->groupBy('date')
+                ->orderBy('date','asc')
+                ->get();
+
+            $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                ->join('products', 'products.id','=','sales.product_id')
+                ->join('employees', 'sales_person_id', '=', 'employees.id')
+                ->join('customers', 'customer_id', '=', 'customers.id')
+                ->whereBetween('date', [$firstDayOfTheMonth, $lastDayOfTheMonth])
+                ->orderBy('date', 'desc')
+                ->get();
+
+            return response()->json(["salesTotal"=>$salesTotal, 'sales'=>$sales], 200);
+        }
+
+        if(empty($start)){
+            $salesTotal = Sale::select('date', \DB::raw('SUM(price) as total'))
+                ->join('products', 'product_id','=','products.id')
+                ->groupBy('date')
+                ->where('date','<',$end)
+                ->orderBy('date','desc')
+                ->first();
+            $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                ->join('products', 'products.id','=','sales.product_id')
+                ->join('employees', 'sales_person_id', '=', 'employees.id')
+                ->join('customers', 'customer_id', '=', 'customers.id')
+                ->where('date', '<', $end)
+                ->orderBy('date', 'desc')
+                ->get();
+            return response()->json(["salesTotal"=>$salesTotal, 'sales'=>$sales], 200);
+        }
+
+        if(empty($end)){
+            $salesTotal = Sale::select('date', \DB::raw('SUM(price) as total'))
+                ->join('products', 'product_id','=','products.id')
+                ->groupBy('date')
+                ->where('date','<',$end)
+                ->orderBy('date','desc')
+                ->first();
+
+            $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                ->join('products', 'products.id','=','sales.product_id')
+                ->join('employees', 'sales_person_id', '=', 'employees.id')
+                ->join('customers', 'customer_id', '=', 'customers.id')
+                ->where('date', '<', $end)
+                ->orderBy('date', 'desc')
+                ->get();
+
+            return response()->json(["salesTotal"=>$salesTotal, 'sales'=>$sales], 200);
+        }
+
+        $salesTotal = Sale::select('date', \DB::raw('SUM(price) as total'))
             ->join('products', 'product_id','=','products.id')
             ->groupBy('date')
+            ->whereBetween('date', [$start,$end])
             ->orderBy('date','desc')
             ->first();
-        $latestDate = strtotime($sale->date);
-        $firstDayOfTheMonth = date('Y-m-01', $latestDate);
-        $lastDayOfTheMonth = date('Y-m-t', $latestDate);
-        $salesTotal = Sale::select('date', \DB::raw('SUM(price) as total'))
-                    ->join('products', 'product_id','=','products.id')
-                    ->whereBetween('date', [$firstDayOfTheMonth,$lastDayOfTheMonth])
-                    ->groupBy('date')
-                    ->orderBy('date','asc')
-                    ->get();
 
         $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
             ->join('products', 'products.id','=','sales.product_id')
             ->join('employees', 'sales_person_id', '=', 'employees.id')
             ->join('customers', 'customer_id', '=', 'customers.id')
-            ->whereBetween('date', [$firstDayOfTheMonth, $lastDayOfTheMonth])
+            ->whereBetween('date', [$start,$end])
             ->orderBy('date', 'desc')
             ->get();
 
         return response()->json(["salesTotal"=>$salesTotal, 'sales'=>$sales], 200);
-    }
 
-    /*
-     * get sales with day totals between two date
-     *
-     * */
-    public function getDayTotalsByDateRange(Request $request){
-        $start = $request->start;
-        $end = $request->end;
-
-        if(empty($start) || empty($end)){
-            return response()->json(["message"=>"invalid parameters."], 400);
-        }
-
-        $start = date('Y-m-d', strtotime($start));
-        $end = date('Y-m-d', strtotime($end));
-
-        $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
-            ->join('products', 'products.id','=','sales.product_id')
-            ->join('employees', 'sales_person_id', '=', 'employees.id')
-            ->join('customers', 'customer_id', '=', 'customers.id')
-            ->whereBetween('date', [$start, $end])
-            ->orderBy('date', 'desc')
-            ->get();
-
-        return response()->json(["salesTotal"=>$sales, 'sales'=>$sales], 200);
     }
 }

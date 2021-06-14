@@ -25,9 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('sales')->group(function () {
     Route::get('', 'App\Http\Controllers\SaleController@list');
 
-    Route::get('dayTotals', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
-
-    Route::get('lastMonthDayTotals', 'App\Http\Controllers\SaleController@getLastMonth');
+    Route::get('dayTotals', 'App\Http\Controllers\SaleController@getByDateRange');
 });
 
 Route::prefix('employees')->group(function(){

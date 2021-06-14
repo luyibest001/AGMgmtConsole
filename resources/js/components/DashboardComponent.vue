@@ -65,18 +65,23 @@
                             cols="12"
                             md="12"
                         >
-                            <v-skeleton-loader
-                                v-bind="attrs"
-                                type="list-item-three-line"
-                            ></v-skeleton-loader>
-                            <v-skeleton-loader
-                                v-bind="attrs"
-                                type="list-item-three-line"
-                            ></v-skeleton-loader>
-                            <v-skeleton-loader
-                                v-bind="attrs"
-                                type="list-item-three-line"
-                            ></v-skeleton-loader>
+                            <v-sheet
+                                :color="`grey ${theme.isDark ? 'darken-2' : 'lighten-4'}`"
+                                class="pa-3"
+                            >
+                                <v-skeleton-loader
+                                    v-bind="attrs"
+                                    type="list-item-three-line"
+                                ></v-skeleton-loader>
+                                <v-skeleton-loader
+                                    v-bind="attrs"
+                                    type="list-item-three-line"
+                                ></v-skeleton-loader>
+                                <v-skeleton-loader
+                                    v-bind="attrs"
+                                    type="list-item-three-line"
+                                ></v-skeleton-loader>
+                            </v-sheet>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -379,19 +384,8 @@ export default {
                 .then(response => {
                     var salesTotal = response.data.salesTotal;
                     var sales = response.data.sales;
-                    this.dashboardSalesList = [];
-                    for(var i=0;i<sales.length;i++){
-                        var sale = {
-                            invoice_id: sales[i].invoiceId,
-                            date: sales[i].date,
-                            product_name: sales[i].product_name,
-                            product_price: sales[i].price,
-                            sales_person_name: sales[i].sales_person_name,
-                            customer_name: sales[i].customer_name
-                        };
-                        this.dashboardSalesList.push(sale);
-                    }
-                    this.drawSalesChart(sales);
+                    this.drawDashboardTable(sales);
+                    this.drawSalesChart(salesTotal);
                 })
                 .catch(error => {
                     console.log(error)
@@ -400,30 +394,34 @@ export default {
         },
 
         async getLastMonth(){
-            axios.get('/api/sales/lastMonthDayTotals',
+            axios.get('/api/sales/dayTotals',
             )
                 .then(response => {
                     var salesTotal = response.data.salesTotal;
                     var sales = response.data.sales;
-                    this.dashboardSalesList = [];
-                    for(var i=0;i<sales.length;i++){
-                        var sale = {
-                            invoice_id: sales[i].invoiceId,
-                            date: sales[i].date,
-                            product_name: sales[i].product_name,
-                            product_price: sales[i].price,
-                            sales_person_name: sales[i].sales_person_name,
-                            customer_name: sales[i].customer_name
-                        };
-                        this.dashboardSalesList.push(sale);
-                    }
 
+                    this.drawDashboardTable(sales);
                     this.drawSalesChart(salesTotal);
                 })
                 .catch(error => {
                     console.log(error)
                     this.errored = true
                 });
+        },
+
+        drawDashboardTable (sales){
+            this.dashboardSalesList = [];
+            for(var i=0;i<sales.length;i++){
+                var sale = {
+                    invoice_id: sales[i].invoiceId,
+                    date: sales[i].date,
+                    product_name: sales[i].product_name,
+                    product_price: sales[i].price,
+                    sales_person_name: sales[i].sales_person_name,
+                    customer_name: sales[i].customer_name
+                };
+                this.dashboardSalesList.push(sale);
+            }
         },
 
         drawSalesChart (sales){

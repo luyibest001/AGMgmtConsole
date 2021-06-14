@@ -4,7 +4,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
     <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.7.4/dist/progressbar.js"></script>
 </head>
-<div id="app">
+<div id="dashboard">
     <dashboard-component></dashboard-component>
 </div>
 <!--<a href="{{ URL::to('logout') }}">Logout</a>-->

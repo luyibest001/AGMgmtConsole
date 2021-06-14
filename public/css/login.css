@@ -10,7 +10,7 @@
 
 body, html {
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: #1d243d;
+    background-color: #fff;
     padding: 0;
     margin: 0;
 }
@@ -34,7 +34,7 @@ body, html {
     border-bottom: 10px solid #8BD17C;
     width: 400px;
     height: 500px;
-    box-shadow: 1px 1px 108.8px 19.2px rgb(25,31,53);
+
 }
 
 .box h4 {

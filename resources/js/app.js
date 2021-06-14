@@ -13,6 +13,7 @@ import vuetify from './plugins/vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import VueGoogleCharts from 'vue-google-charts'
 
+Vue.use(vuetify);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,25 +22,22 @@ import VueGoogleCharts from 'vue-google-charts'
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+import DashboardComponent from './components/DashboardComponent';
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
+Vue.component('dashboard-component', DashboardComponent);
 
+Vue.component('datagrid-component', require('./components/DataGridComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-
-
-const app = new Vue({
-    vuetify,
-    el: '#app',
-});
-
 const dashboard = new Vue({
     vuetify,
     el: '#dashboard',
+    components: { DashboardComponent },
 });
+

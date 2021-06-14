@@ -10,8 +10,90 @@ class SaleController extends Controller
     /*
      * list all sales
      * */
-    public function list(){
+    public function list(Request $request){
+        /*$user = \Auth::user();
+        \Log::info($user);
+        if(isset($user)){*/
+        $customer = $request->customer;
+        $product = $request->product;
+        $employee = $request->employee;
+        if(isset($customer) || isset($product) || isset($employee)){
+            if(isset($customer) && !isset($product) && !isset($employee)){
+                $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                    ->join('products', 'products.id','=','sales.product_id')
+                    ->join('employees', 'sales_person_id', '=', 'employees.id')
+                    ->join('customers', 'customer_id', '=', 'customers.id')
+                    ->where('customer_id', $customer)
+                    ->orderBy('date', 'desc')
+                    ->get();
+            }else if(isset($customer) && isset($product) && !isset($employee)){
+                $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                    ->join('products', 'products.id','=','sales.product_id')
+                    ->join('employees', 'sales_person_id', '=', 'employees.id')
+                    ->join('customers', 'customer_id', '=', 'customers.id')
+                    ->where('customer_id', $customer)
+                    ->where('product_id',$product)
+                    ->orderBy('date', 'desc')
+                    ->get();
+            }else if(isset($customer) && isset($product) && isset($employee)){
+                $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                    ->join('products', 'products.id','=','sales.product_id')
+                    ->join('employees', 'sales_person_id', '=', 'employees.id')
+                    ->join('customers', 'customer_id', '=', 'customers.id')
+                    ->where('customer_id', $customer)
+                    ->where('product_id',$product)
+                    ->where('sales_person_id', $employee)
+                    ->orderBy('date', 'desc')
+                    ->get();
+            }else if(!isset($customer) && isset($product) && isset($employee)){
+                $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                    ->join('products', 'products.id','=','sales.product_id')
+                    ->join('employees', 'sales_person_id', '=', 'employees.id')
+                    ->join('customers', 'customer_id', '=', 'customers.id')
+                    ->where('product_id',$product)
+                    ->where('sales_person_id', $employee)
+                    ->orderBy('date', 'desc')
+                    ->get();
+            }else if(isset($customer) && !isset($product) && isset($employee)){
+                $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                    ->join('products', 'products.id','=','sales.product_id')
+                    ->join('employees', 'sales_person_id', '=', 'employees.id')
+                    ->join('customers', 'customer_id', '=', 'customers.id')
+                    ->where('sales_person_id', $employee)
+                    ->where('customer_id', $customer)
+                    ->orderBy('date', 'desc')
+                    ->get();
+            }else if(!isset($customer) && !isset($product) && isset($employee)){
+                $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                    ->join('products', 'products.id','=','sales.product_id')
+                    ->join('employees', 'sales_person_id', '=', 'employees.id')
+                    ->join('customers', 'customer_id', '=', 'customers.id')
+                    ->where('sales_person_id', $employee)
+                    ->orderBy('date', 'desc')
+                    ->get();
+            }else if(!isset($customer) && isset($product) && !isset($employee)){
+                $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                    ->join('products', 'products.id','=','sales.product_id')
+                    ->join('employees', 'sales_person_id', '=', 'employees.id')
+                    ->join('customers', 'customer_id', '=', 'customers.id')
+                    ->where('product_id', $product)
+                    ->orderBy('date', 'desc')
+                    ->get();
+            }
 
+        }else{
+            $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+                ->join('products', 'products.id','=','sales.product_id')
+                ->join('employees', 'sales_person_id', '=', 'employees.id')
+                ->join('customers', 'customer_id', '=', 'customers.id')
+                ->orderBy('date', 'desc')
+                ->get();
+        }
+
+        return response()->json(['sales'=>$sales], 200);
+        /*}
+
+        return response()->json(['message'=>'unauthenticated'], 403);*/
     }
 
     public function getLastMonth(){
@@ -21,19 +103,24 @@ class SaleController extends Controller
             ->orderBy('date','desc')
             ->first();
         $latestDate = strtotime($sale->date);
-        \Log::info($sale->date);
         $firstDayOfTheMonth = date('Y-m-01', $latestDate);
         $lastDayOfTheMonth = date('Y-m-t', $latestDate);
-        \Log::info($firstDayOfTheMonth);
-        \Log::info($lastDayOfTheMonth);
-        $sales = Sale::select('date', \DB::raw('SUM(price) as total'))
+        $salesTotal = Sale::select('date', \DB::raw('SUM(price) as total'))
                     ->join('products', 'product_id','=','products.id')
                     ->whereBetween('date', [$firstDayOfTheMonth,$lastDayOfTheMonth])
                     ->groupBy('date')
                     ->orderBy('date','asc')
                     ->get();
 
-        return response()->json(["sales"=>$sales], 200);
+        $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+            ->join('products', 'products.id','=','sales.product_id')
+            ->join('employees', 'sales_person_id', '=', 'employees.id')
+            ->join('customers', 'customer_id', '=', 'customers.id')
+            ->whereBetween('date', [$firstDayOfTheMonth, $lastDayOfTheMonth])
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return response()->json(["salesTotal"=>$salesTotal, 'sales'=>$sales], 200);
     }
 
     /*
@@ -50,15 +137,15 @@ class SaleController extends Controller
 
         $start = date('Y-m-d', strtotime($start));
         $end = date('Y-m-d', strtotime($end));
-        \Log::info($start);
-        \Log::info($end);
 
-        $sales = Sale::select('date', \DB::raw('SUM(price) as total'))
-                     ->join('products', 'product_id','=','products.id')
-                     ->whereBetween('date', [$start, $end])
-                     ->groupBy('date')
-                     ->orderBy('date')
-                     ->get();
-        return response()->json(["sales"=>$sales], 200);
+        $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
+            ->join('products', 'products.id','=','sales.product_id')
+            ->join('employees', 'sales_person_id', '=', 'employees.id')
+            ->join('customers', 'customer_id', '=', 'customers.id')
+            ->whereBetween('date', [$start, $end])
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return response()->json(["salesTotal"=>$sales, 'sales'=>$sales], 200);
     }
 }

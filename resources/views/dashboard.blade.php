@@ -1,5 +1,6 @@
 @include('shared.header')
+<link rel="stylesheet" type="text/css" href="/css/test.css">
 <div id="dashboard" data-app>
-    <dashboard-component></dashboard-component>
+    <datagrid-component></datagrid-component>
 </div>
 @include('shared.footer')

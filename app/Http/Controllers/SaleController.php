@@ -136,7 +136,7 @@ class SaleController extends Controller
                 ->groupBy('date')
                 ->where('date','<',$end)
                 ->orderBy('date','desc')
-                ->first();
+                ->get();
             $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
                 ->join('products', 'products.id','=','sales.product_id')
                 ->join('employees', 'sales_person_id', '=', 'employees.id')
@@ -153,7 +153,7 @@ class SaleController extends Controller
                 ->groupBy('date')
                 ->where('date','<',$end)
                 ->orderBy('date','desc')
-                ->first();
+                ->get();
 
             $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
                 ->join('products', 'products.id','=','sales.product_id')
@@ -171,7 +171,7 @@ class SaleController extends Controller
             ->groupBy('date')
             ->whereBetween('date', [$start,$end])
             ->orderBy('date','desc')
-            ->first();
+            ->get();
 
         $sales = Sale::select('invoiceId', 'products.name as product_name', 'product_id', 'products.price', 'employees.name as sales_person_name', 'sales_person_id', 'customers.full_name as customer_name', 'customer_id','date')
             ->join('products', 'products.id','=','sales.product_id')

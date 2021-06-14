@@ -113,9 +113,10 @@ body {
     padding: 10px;
     width: 25%;
     height: 120px;
-    background-color: #fff;
+    background-color: #0d6efd;
     color: #1a202c;
     margin-bottom: 30px;
+    border-radius: 5px;
     text-align: center;
     box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.3);
 }

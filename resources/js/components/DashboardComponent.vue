@@ -65,23 +65,18 @@
                             cols="12"
                             md="12"
                         >
-                            <v-sheet
-                                :color="`grey ${theme.isDark ? 'darken-2' : 'lighten-4'}`"
-                                class="pa-3"
-                            >
-                                <v-skeleton-loader
-                                    v-bind="attrs"
-                                    type="list-item-three-line"
-                                ></v-skeleton-loader>
-                                <v-skeleton-loader
-                                    v-bind="attrs"
-                                    type="list-item-three-line"
-                                ></v-skeleton-loader>
-                                <v-skeleton-loader
-                                    v-bind="attrs"
-                                    type="list-item-three-line"
-                                ></v-skeleton-loader>
-                            </v-sheet>
+                            <v-skeleton-loader
+                                v-bind="attrs"
+                                type="list-item-three-line"
+                            ></v-skeleton-loader>
+                            <v-skeleton-loader
+                                v-bind="attrs"
+                                type="list-item-three-line"
+                            ></v-skeleton-loader>
+                            <v-skeleton-loader
+                                v-bind="attrs"
+                                type="list-item-three-line"
+                            ></v-skeleton-loader>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -243,7 +238,7 @@ export default {
         currentTab (val){
             if(val === "dashboard"){
                 this.clearSalesData();
-                this.getLastMonth();
+                this.getSalesByDate();
             }else{
                 this.getAllSales();
             }
@@ -271,7 +266,7 @@ export default {
             }
 
             if(this.selectedEmployee != null){
-                url += 'employee='+this.selectedEmployee + "&";
+                url += 'employee='+this.selectedEmployee;
             }
 
             url = url.replace(/&\s*$/, "");
@@ -379,27 +374,23 @@ export default {
                 });
         },
         async getSalesByDate(start, end){
-            axios.get('/api/sales/dayTotals?start='+start+"&end="+end,
+            var url = "/api/sales/dayTotals?";
+            if(start !== undefined){
+                url += "start="+start+"&";
+            }
+
+            if(end !== undefined){
+                url += "end="+end;
+            }
+
+            url = url.replace(/&\s*$/, "");
+
+            axios.get(url,
             )
                 .then(response => {
                     var salesTotal = response.data.salesTotal;
                     var sales = response.data.sales;
-                    this.drawDashboardTable(sales);
-                    this.drawSalesChart(salesTotal);
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                });
-        },
-
-        async getLastMonth(){
-            axios.get('/api/sales/dayTotals',
-            )
-                .then(response => {
-                    var salesTotal = response.data.salesTotal;
-                    var sales = response.data.sales;
-
+                    console.log(salesTotal);
                     this.drawDashboardTable(sales);
                     this.drawSalesChart(salesTotal);
                 })
@@ -478,7 +469,7 @@ export default {
         },
     },
     created() {
-        this.getLastMonth();
+        this.getSalesByDate();
         this.getCustomers();
         this.getProducts();
         this.getEmployees();

@@ -379,7 +379,7 @@ export default {
                 .then(response => {
                     var salesTotal = response.data.salesTotal;
                     var sales = response.data.sales;
-                    this.dashboardSalesList = null;
+                    this.dashboardSalesList = [];
                     for(var i=0;i<sales.length;i++){
                         var sale = {
                             invoice_id: sales[i].invoiceId,
@@ -405,7 +405,7 @@ export default {
                 .then(response => {
                     var salesTotal = response.data.salesTotal;
                     var sales = response.data.sales;
-                    this.dashboardSalesList = null;
+                    this.dashboardSalesList = [];
                     for(var i=0;i<sales.length;i++){
                         var sale = {
                             invoice_id: sales[i].invoiceId,

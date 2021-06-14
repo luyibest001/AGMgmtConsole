@@ -111,10 +111,10 @@ body {
 
 .dashboard-box{
     padding: 10px;
-    width: 25%;
+    width: 20%;
     height: 120px;
     background-color: dodgerblue;
-    color: #1a202c;
+    color: #fff;
     margin-bottom: 30px;
     border-radius: 5px;
     text-align: center;
@@ -127,9 +127,10 @@ body {
 }
 
 .dashboard-box h2{
-    margin-bottom: 5px;
+    margin-top: 5px;
     text-align: center;
     float: unset;
+    color: #fff!important;
 }
 
 .dashboard-box p{

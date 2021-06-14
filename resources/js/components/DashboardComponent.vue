@@ -19,7 +19,7 @@
         </div>
         <div class="content" v-if="currentTab === 'dashboard'">
             <div class="titleBar">
-                <h2>Dashboard</h2>
+                <h2 style="float: unset!important; margin-bottom: 20px;">Dashboard</h2>
                 <div class="row">
                     <div class="large-6 columns">
                         <label for="start">Start Date</label>
@@ -50,8 +50,9 @@
                 </v-sheet>
             </div>
             <div class="dashboard-box" v-else>
-                <h2>Total Sales</h2><br/>
                 <p>${{totalSales}}</p>
+                <hr style="margin: 0!important;">
+                <h2>Total Sales</h2><br/>
             </div>
             <div class="mainChart">
                 <canvas id="salesData"></canvas>
@@ -91,7 +92,7 @@
 
         <div class="content" v-else>
             <div style="margin-bottom: 30px;">
-                <h2>DataGrid</h2><br/>
+                <h2 style="float: unset!important; margin-bottom: 20px;">DataGrid</h2><br/>
                 <div class="row">
                     <div class="large-4 columns">
                         <label for="start">Select Product</label>

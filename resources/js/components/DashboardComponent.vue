@@ -91,26 +91,26 @@
 
         <div class="content" v-else>
             <div style="margin-bottom: 30px;">
-                <h2>DataGrid</h2>
+                <h2>DataGrid</h2><br/>
                 <div class="row">
                     <div class="large-4 columns">
                         <label for="start">Select Product</label>
                         <select v-model="selectedProduct">
-                            <option selected disabled>Select Product</option>
+                            <option selected value="">Select Product</option>
                             <option v-for="product in products" :value="product.id">{{product.name}}</option>
                         </select>
                     </div>
                     <div class="large-4 columns">
                         <label for="end">Select Customer</label>
                         <select v-model="selectedCustomer">
-                            <option selected disabled>Select Customer</option>
+                            <option selected value="">Select Customer</option>
                             <option v-for="customer in customers" :value="customer.id">{{customer.full_name}}</option>
                         </select>
                     </div>
                     <div class="large-4 columns">
                         <label for="end">Employee</label>
                         <select v-model="selectedEmployee">
-                            <option selected disabled>Select Employee</option>
+                            <option selected value="">Select Employee</option>
                             <option v-for="employee in employees" :value="employee.id">{{employee.name}}</option>
                         </select>
                     </div>
@@ -124,7 +124,7 @@
             </div>
             <div class="text-center">
                 <v-app>
-                    <v-container v-if="this.salesList.length === 0">
+                    <v-container v-if="this.salesList == null">
                         <v-row>
                             <v-col
                                 cols="12"
@@ -207,7 +207,7 @@ export default {
                 { text: 'Employee', value: 'sales_person_name' },
                 { text: 'Customer', value: 'customer_name' }
             ],
-            salesList: [],
+            salesList: null,
             dashboardSalesList: [],
             products: [],
             customers: [],
@@ -256,7 +256,7 @@ export default {
 
         onDataGridFilterClicked(){
             var url = "/api/sales?";
-            this.dashboardSalesList = null;
+            this.salesList = null;
             if(this.selectedCustomer != null){
                 url += 'customer='+this.selectedCustomer + "&";
             }

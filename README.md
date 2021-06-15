@@ -60,58 +60,24 @@
    
 ## Tasks
 
-1. Create models
-   - php artisan make:model Customer -m
-   - php artisan make:model Sale -m
-   - php artisan make:model Product -m
-   - php artisan make:model Employee -m
-
-2. Create tables with migrations file
+1. Create models, create migrate files to create tables, import data  
+   - $php artisan make:model Customer -m
+   - $php artisan make:model Sale -m
+   - $php artisan make:model Product -m
+   - $php artisan make:model Employee -m
    - define columns in each migration file
-   - php artisan migration
-
-3. Create seeder for each model and import data into database
-   - e.g. php artisan make:seeder CustomerSeeder
+   - $php artisan migration
+   - php artisan make:seeder [CustomerSeeder|EmployeeSeeder|SaleSeeder|ProductSeeder]
    - parse xls file and create a record for each row
    - call four seeders from DatabaseSeeder class by "php artisan db:seed"
 
-4. Login Page
-
-5. Dashboard Page
-   - 
-
-6. DataGrid Page 
-   
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2. Create Controllers and API routes
+   - UserController.php, ProductController.php, CustomerController.php, EmployeeController.php
+   - in web.php and api.php create routes
+   - test API with Postman
+    
+3. Create Views
+   - create views for login and dashboard page login.blade.php, index.blade.php
+   - create Vue Components and register in app.js (LoginComponenent.vue, DashboardComponent.vue)
+   - create UI with vuetify and bootstrap
+   - css files /public/css/login.css, /public/css/dashboard.css

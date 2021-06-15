@@ -88,6 +88,7 @@ export default {
                 .then(response=>{
                     var headers = response.headers;
                     console.log(headers);
+                    console.log(document.cookie);
                     //console.log('response');
                     //window.location.href = "/";
                 })

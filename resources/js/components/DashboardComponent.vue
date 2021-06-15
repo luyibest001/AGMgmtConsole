@@ -471,8 +471,8 @@ export default {
 
         doLogout (){
             console.log('logout!!!');
-            console.log(document.cookie);
-            const token = this.$cookies.get("token");
+            console.log(window.sessionStorage.accessToken);
+            const token = window.sessionStorage.accessToken;
             console.log(token);
             axios.delete('/api/auth/user', {
                 headers: {

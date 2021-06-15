@@ -86,11 +86,10 @@ export default {
             this.submitted = true;
             axios.post('/api/auth/user', params)
                 .then(response=>{
-                    var headers = response.headers;
-                    console.log(headers);
+                    console.log(response.data);
                     window.sessionStorage.accessToken = response.data.access_token;
                     console.log(document.cookie);
-                    console.log(access_token);
+                    console.log(window.sessionStorage.accessToken);
                     //console.log('response');
                     //window.location.href = "/";
                 })

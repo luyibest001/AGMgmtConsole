@@ -74,6 +74,7 @@
 2. Create Controllers and API routes
    - UserController.php, ProductController.php, CustomerController.php, EmployeeController.php
    - in web.php and api.php create routes
+   - use Jwt to authenticate API 
    - test API with Postman
     
 3. Create Views

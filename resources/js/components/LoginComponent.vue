@@ -88,6 +88,7 @@ export default {
                 .then(response=>{
                     var headers = response.headers;
                     console.log(headers);
+                    $window.sessionStorage.accessToken = response.body.access_token;
                     console.log(document.cookie);
                     //console.log('response');
                     //window.location.href = "/";

@@ -37,17 +37,17 @@ class UserController extends Controller
 
             // attempt to do the login
             if (! $token = auth('api')->attempt($credentials)) {
-                \Log::info($credentials);
                 //return redirect()->route('login-page', ['success'=>false, 'message'=>'incorrect email or password.']); // send back the input (not the password) so that we can repopulate the form
-                $response->withException();
+                /*$response->withException();
                 $response->status(401);
-                return $response;
-                //return response()->json(['error' => 'Unauthorized'], 401);
+                return $response;*/
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
 
             session(['user'=>$this->getUser()]);
-            \Log::info('HHAHHAHAHAH LOGIN!');
-            $response->withCookie(
+
+            return $this->respondWithToken($token);
+            /*$response->withCookie(
                 cookie(
                     'token',
                     $token,
@@ -55,7 +55,7 @@ class UserController extends Controller
                 )
             );
 
-            return $response;
+            return $response;*/
         }
     }
 

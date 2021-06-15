@@ -92,3 +92,5 @@
    - email: admin@gmail.com
    - password: admin
 
+3. sql dump
+   - heroku_psql_database.sql

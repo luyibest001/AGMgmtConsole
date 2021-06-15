@@ -82,3 +82,13 @@
    - create Vue Components and register in app.js (LoginComponenent.vue, DashboardComponent.vue)
    - create UI with vuetify and bootstrap
    - css files /public/css/login.css, /public/css/dashboard.css
+
+## App Info
+
+1. Heroku url
+   https://accentgrouptest.herokuapp.com/
+
+2. test user
+   - email: admin@gmail.com
+   - password: admin
+

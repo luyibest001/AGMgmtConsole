@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div v-if="salesData.labels.length === 0">
+            <div v-if="salesData.labels.length === 0 && chartIsLoading">
                 <v-sheet
                          :color="`grey ${theme.isDark ? 'darken-2' : 'lighten-4'}`"
                          class="pa-3"
@@ -176,6 +176,7 @@ export default {
             toDate: null,
             menuTo: false,
             user: null,
+            chartIsLoading: true,
             salesData : {
                 labels: [/*"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"*/],
                 datasets: [
@@ -411,6 +412,7 @@ export default {
 
             url = url.replace(/&\s*$/, "");
 
+            this.chartIsLoading = true;
             const token = window.sessionStorage.accessToken;
             axios.get(url,{
                     headers: {
@@ -455,6 +457,7 @@ export default {
             }
             this.totalSales = this.totalSales.toFixed(2);
 
+            this.chartIsLoading = false;
             if(this.salesData.datasets[0].data.length>0){
                 var ctx = document.getElementById("salesData").getContext("2d");
 

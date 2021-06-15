@@ -19,33 +19,25 @@ class UserController extends Controller
      */
     public function doLogin(Request $request){
 
+        // run the validation rules on the inputs from the form
         $validated = $request->validate([
             'email'    => 'required|email', // make sure the email is an actual email
-            'password' => 'required|alphaNum|min:3' // password can only be alphanumeric and has to be greater than 3 characters
+            'password' => 'required'
         ]);
 
-
-// run the validation rules on the inputs from the form
-
-        $response = new \Illuminate\Http\Response();
-
         if (!$validated) {
-            return response()->json(['error'=>'invalid parameters'], 400);
-            //return $response->setContent("invalid parameters");
-            //return redirect()->route('login-page', ['success'=>false, 'message'=>'invalid email or password.']); // send back the input (not the password) so that we can repopulate the form
+            return response()->json(['error'=>'invalid parameters', 'code'=>400], 200);
         } else {
             $credentials = request(['email', 'password']);
 
             // attempt to do the login
             if (! $token = auth('api')->attempt($credentials)) {
-                //return redirect()->route('login-page', ['success'=>false, 'message'=>'incorrect email or password.']); // send back the input (not the password) so that we can repopulate the form
-                /*$response->withException();
-                $response->status(401);
-                return $response;*/
-                return response()->json(['error' => 'Unauthorized'], 401);
+                return response()->json(['error' => 'Unauthorized', 'code'=>401], 200);
             }
 
-            session(['user'=>$this->getUser()]);
+            session(['user'=>auth('api')->user()]);
+
+            //\Log::info(session('user'));
 
             return $this->respondWithToken($token);
             /*$response->withCookie(
@@ -93,7 +85,8 @@ class UserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'code'=>200
         ]);
     }
 

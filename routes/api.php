@@ -14,15 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'api', 'prefix' => 'auth/user'], function ($router) {
+/*Route::group(['middleware' => 'api', 'prefix' => 'auth/user'], function ($router) {
     Route::post('', 'App\Http\Controllers\UserController@doLogin')->name('login');
     Route::delete('', 'App\Http\Controllers\UserController@doLogout');
-});
+});*/
 
 
 Route::group(['middleware' => 'jwt.verify'], function () {
     Route::prefix('auth/user')->group(function (){
-        Route::delete('', 'App\Http\Controllers\UserController@doLogout');
         Route::put('', 'App\Http\Controllers\UserController@refresh');
         Route::get('', 'App\Http\Controllers\UserController@getUser');
     });

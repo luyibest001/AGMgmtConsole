@@ -161,10 +161,7 @@
 <script>
 import { GChart } from "vue-google-charts";
 export default {
-    name: "App",
-    components: {
-        GChart
-    },
+    name: "dashboard",
     data() {
         return {
             attrs: {
@@ -392,13 +389,14 @@ export default {
 
         async getUser(){
             const token = window.sessionStorage.accessToken;
-            axios.get('/user', {
+            axios.get('/api/auth/user', {
                 headers: {
                     'Authorization': 'Bearer '+token
                 }
             })
                  .then(response=>{
-                     this.user = response.data.user;
+                     console.log(response.data);
+                     this.user = response.data;
                  }).catch(error => {
                     console.log(error)
                     this.user = null;
@@ -505,21 +503,16 @@ export default {
         },
 
         doLogout (){
-            console.log('logout!!!');
             console.log(window.sessionStorage.accessToken);
             const token = window.sessionStorage.accessToken;
-            console.log(token);
-            axios.delete('/api/auth/user', {
+            axios.delete('/auth/user', {
                 headers: {
                     'Authorization': 'Bearer '+token
                 }
             })
                 .then(response=>{
-                    if(response.data.code === 200){
-                        window.location.url = "/login";
-                    }else{
-                        console.log(response.data);
-                    }
+                    console.log('logout successfully!!!');
+                    location.reload();
                 }).catch(error=>{
                     console.log(error);
             });

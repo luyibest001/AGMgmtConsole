@@ -24,27 +24,16 @@ Route::get('/', function () {
 
 Route::prefix('login')->group(function () {
     Route::get('', function () {
-        $user = auth('api')->user();
-
+        $user = session('user');
+        \Log::info($user);
         if(isset($user)){
-
             return redirect('/');
         }
         return view('login');
     })->name('login-page');
-
-    Route::post('', 'App\Http\Controllers\UserController@doLogin');
 });
 
-Route::get('logout', array('uses' => 'App\Http\Controllers\UserController@doLogout'));
-
-//Route::get('/dashboard', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
-Route::get('/dashboard', function (){
-    return view('dashboard');
+Route::group(['prefix' => 'auth/user'], function ($router) {
+    Route::post('', 'App\Http\Controllers\UserController@doLogin')->name('login');
+    Route::delete('', 'App\Http\Controllers\UserController@doLogout');
 });
-
-Route::prefix('user')->group(function(){
-    Route::get('', 'App\Http\Controllers\UserController@getUser');
-});
-
-

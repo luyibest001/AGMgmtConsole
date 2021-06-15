@@ -459,27 +459,28 @@ export default {
             }
             this.totalSales = this.totalSales.toFixed(2);
 
-            console.log(this.salesData.datasets[0].data);
-            var ctx = document.getElementById("salesData").getContext("2d");
+            if(this.salesData.datasets[0].data.length>0){
+                var ctx = document.getElementById("salesData").getContext("2d");
 
-            var ceilNum = this.ceilNumber(Math.max.apply(Math, this.salesData.datasets[0].data) / 10) ;
-            window.myLineChart = new Chart(ctx);
-            window.myLineChart.Line(this.salesData, {
-                pointDotRadius : 6,
-                pointDotStrokeWidth : 2,
-                datasetStrokeWidth : 3,
-                scaleShowVerticalLines: false,
-                scaleGridLineWidth : 2,
-                scaleShowGridLines : true,
-                scaleGridLineColor : "rgba(225, 255, 255, 0.02)",
-                scaleOverride: true,
-                scaleSteps: 10,
-                scaleStepWidth: Math.ceil(ceilNum),
-                scaleStartValue: 0,
+                var ceilNum = this.ceilNumber(Math.max.apply(Math, this.salesData.datasets[0].data) / 10) ;
+                window.myLineChart = new Chart(ctx);
+                window.myLineChart.Line(this.salesData, {
+                    pointDotRadius : 6,
+                    pointDotStrokeWidth : 2,
+                    datasetStrokeWidth : 3,
+                    scaleShowVerticalLines: false,
+                    scaleGridLineWidth : 2,
+                    scaleShowGridLines : true,
+                    scaleGridLineColor : "rgba(225, 255, 255, 0.02)",
+                    scaleOverride: true,
+                    scaleSteps: 10,
+                    scaleStepWidth: Math.ceil(ceilNum),
+                    scaleStartValue: 0,
 
-                responsive: true
+                    responsive: true
 
-            });
+                });
+            }
         },
 
         ceilNumber(number){

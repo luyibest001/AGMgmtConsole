@@ -35,9 +35,12 @@ class UserController extends Controller
                 return response()->json(['error' => 'Unauthorized', 'code'=>401], 200);
             }
 
-            session(['user'=>auth('api')->user()]);
 
-            //\Log::info(session('user'));
+            $user = auth('api')->user();
+            $user->access_token = $token;
+            session(['user'=>$user]);
+
+            \Log::info($token);
 
             return $this->respondWithToken($token);
             /*$response->withCookie(
@@ -70,7 +73,13 @@ class UserController extends Controller
      */
     public function getUser(){
 
-        return response()->json(auth('api')->user());
+        \Log::info('get user');
+        $user = session('user');
+        \Log::info($user);
+        if($user == null){
+            return response()->json(['error'=>'Unauthenticated','code'=>403]);
+        }
+        return response()->json(['user'=>$user, 'code'=>200]);
     }
 
     /**

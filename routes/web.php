@@ -36,4 +36,5 @@ Route::prefix('login')->group(function () {
 Route::group(['prefix' => 'auth/user'], function ($router) {
     Route::post('', 'App\Http\Controllers\UserController@doLogin')->name('login');
     Route::delete('', 'App\Http\Controllers\UserController@doLogout');
+    Route::get('', 'App\Http\Controllers\UserController@getUser');
 });

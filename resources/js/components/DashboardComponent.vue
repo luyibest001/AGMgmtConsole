@@ -169,12 +169,6 @@ export default {
                 boilerplate: true,
                 elevation: 2,
             },
-            activePickerFrom: null,
-            activePickerTo: null,
-            fromDate: null,
-            menuFrom: false,
-            toDate: null,
-            menuTo: false,
             user: null,
             chartIsLoading: true,
             salesData : {
@@ -214,7 +208,6 @@ export default {
             selectedCustomer: null,
             selectedProduct: null,
             selectedEmployee: null,
-            isUpdating: false,
         };
     },
     inject: {
@@ -223,17 +216,6 @@ export default {
         },
     },
     watch: {
-        isUpdating (val) {
-            if (val) {
-                setTimeout(() => (this.isUpdating = false), 3000)
-            }
-        },
-        menuFrom (val) {
-            val && setTimeout(() => (this.activePickerFrom = 'YEAR'))
-        },
-        menuTo (val) {
-            val && setTimeout(() => (this.activePickerTo = 'YEAR'))
-        },
         currentTab (val){
             if(val === "dashboard"){
                 this.clearSalesData();
@@ -270,7 +252,7 @@ export default {
 
             url = url.replace(/&\s*$/, "");
 
-            const token = window.sessionStorage.accessToken;
+            const token = this.user.access_token;
             axios.get(url, {
                 headers: {
                     'Authorization': 'Bearer '+token
@@ -319,7 +301,7 @@ export default {
         },
 
         async getProducts(){
-            const token = window.sessionStorage.accessToken;
+            const token = this.user.access_token;
             axios.get('/api/products', {
                 headers: {
                     'Authorization': 'Bearer '+token
@@ -333,7 +315,7 @@ export default {
         },
 
         async getEmployees(){
-            const token = window.sessionStorage.accessToken;
+            const token = this.user.access_token;
             axios.get('/api/employees',{
                 headers: {
                     'Authorization': 'Bearer '+token
@@ -348,7 +330,7 @@ export default {
         },
 
         async getCustomers(){
-            const token = window.sessionStorage.accessToken;
+            const token = this.user.access_token;
             axios.get('/api/customers',{
                 headers: {
                     'Authorization': 'Bearer '+token
@@ -361,7 +343,7 @@ export default {
                 });
         },
         getAllSales(){
-            const token = window.sessionStorage.accessToken;
+            const token = this.user.access_token;
           axios.get('/api/sales',{
               headers: {
                   'Authorization': 'Bearer '+token
@@ -387,14 +369,18 @@ export default {
         },
 
         async getUser(){
-            const token = window.sessionStorage.accessToken;
-            axios.get('/api/auth/user', {
-                headers: {
-                    'Authorization': 'Bearer '+token
-                }
-            })
+            axios.get('/auth/user')
                  .then(response=>{
-                     this.user = response.data;
+                     if(response.data.code === 200){
+                         this.user = response.data.user;
+                         this.getSalesByDate();
+                         this.getCustomers();
+                         this.getProducts();
+                         this.getEmployees();
+                     }else{
+                         alert('logout failed');
+                         console.log(response.data);
+                     }
                  }).catch(error => {
                     console.log(error)
                     this.user = null;
@@ -413,7 +399,7 @@ export default {
             url = url.replace(/&\s*$/, "");
 
             this.chartIsLoading = true;
-            const token = window.sessionStorage.accessToken;
+            const token = this.user.access_token;
             axios.get(url,{
                     headers: {
                         'Authorization': 'Bearer '+token
@@ -493,17 +479,8 @@ export default {
             }
             return Math.ceil(number) * Math.pow(10,bite);
         },
-
-        saveFrom (date) {
-            this.$refs.menuFrom.save(date)
-        },
-
-        saveTo (date) {
-            this.$refs.menuTo.save(date)
-        },
-
         doLogout (){
-            const token = window.sessionStorage.accessToken;
+            const token = this.user.access_token;
             axios.delete('/auth/user', {
                 headers: {
                     'Authorization': 'Bearer '+token
@@ -519,10 +496,6 @@ export default {
     },
     created() {
         this.getUser();
-        this.getSalesByDate();
-        this.getCustomers();
-        this.getProducts();
-        this.getEmployees();
     }
 };
 </script>

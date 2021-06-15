@@ -87,7 +87,6 @@ export default {
             this.submitted = true;
             axios.post('/auth/user', params)
                 .then(response=>{
-                    window.sessionStorage.accessToken = response.data.access_token;
                     if(response.data.code === 200){
                         window.location.href = '/';
                     }else if(response.data.code === 401){

@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'jwt.verify'], function () {
     Route::prefix('auth/user')->group(function (){
         Route::put('', 'App\Http\Controllers\UserController@refresh');
-        Route::get('', 'App\Http\Controllers\UserController@getUser');
     });
 
     Route::prefix('sales')->group(function () {

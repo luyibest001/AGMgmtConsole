@@ -11,9 +11,10 @@ window.Vue = require('vue');
 import Vue from 'vue'
 import vuetify from './plugins/vuetify'
 import 'vuetify/dist/vuetify.min.css'
-import VueGoogleCharts from 'vue-google-charts'
+import VueCookies from 'vue-cookies';
 
 Vue.use(vuetify);
+Vue.use(VueCookies);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -23,21 +24,25 @@ Vue.use(vuetify);
  */
 
 import DashboardComponent from './components/DashboardComponent';
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+import LoginComponent from './components/LoginComponent';
 
 Vue.component('dashboard-component', DashboardComponent);
 
-Vue.component('datagrid-component', require('./components/DataGridComponent.vue').default);
+Vue.component('login-component', LoginComponent);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const login = new Vue({
+    vuetify,
+    el: '#login',
+    components: { LoginComponent },
+});
+
 const dashboard = new Vue({
     vuetify,
     el: '#dashboard',
     components: { DashboardComponent },
 });
-

@@ -24,8 +24,10 @@ Route::get('/', function () {
 
 Route::prefix('login')->group(function () {
     Route::get('', function () {
-        $user = session('user');
+        $user = auth('api')->user();
+
         if(isset($user)){
+
             return redirect('/');
         }
         return view('login');
@@ -39,6 +41,10 @@ Route::get('logout', array('uses' => 'App\Http\Controllers\UserController@doLogo
 //Route::get('/dashboard', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
 Route::get('/dashboard', function (){
     return view('dashboard');
+});
+
+Route::prefix('user')->group(function(){
+    Route::get('', 'App\Http\Controllers\UserController@getUser');
 });
 
 

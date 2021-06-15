@@ -14,7 +14,7 @@
             <ul class="menu">
                 <li>Account</li>
                 <li v-if="user != null">{{user.name}}</li>
-                <li><a href="/logout">Logout</a></li>
+                <li><button class="menu-button" @click="doLogout" type="button">Logout</button></li>
             </ul>
         </div>
         <div class="content" v-if="currentTab === 'dashboard'">
@@ -366,7 +366,7 @@ export default {
         },
 
         async getUser(){
-            axios.get('/api/user')
+            axios.get('/user')
                  .then(response=>{
                      this.user = response.data.user;
                  }).catch(error => {
@@ -468,8 +468,30 @@ export default {
         saveTo (date) {
             this.$refs.menuTo.save(date)
         },
+
+        doLogout (){
+            console.log('logout!!!');
+            console.log(document.cookie);
+            const token = this.$cookies.get("token");
+            console.log(token);
+            axios.delete('/api/auth/user', {
+                headers: {
+                    'Authorization': 'Bearer '+token
+                }
+            })
+                .then(response=>{
+                    if(response.data.code === 200){
+                        window.location.url = "/login";
+                    }else{
+                        console.log(response.data);
+                    }
+                }).catch(error=>{
+                    console.log(error);
+            });
+        }
     },
     created() {
+        this.getUser();
         this.getSalesByDate();
         this.getCustomers();
         this.getProducts();

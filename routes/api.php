@@ -14,34 +14,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-
-    Route::get('sales', 'App\Http\Controllers\SaleController@list');
-
-    Route::get('sales/dayTotals', 'App\Http\Controllers\SaleController@getDayTotalsByDateRange');
+Route::group(['middleware' => 'api', 'prefix' => 'auth/user'], function ($router) {
+    Route::post('', 'App\Http\Controllers\UserController@doLogin')->name('login');
+    Route::delete('', 'App\Http\Controllers\UserController@doLogout');
 });
 
-Route::prefix('sales')->group(function () {
-    Route::get('', 'App\Http\Controllers\SaleController@list');
 
-    Route::get('dayTotals', 'App\Http\Controllers\SaleController@getByDateRange');
-});
+Route::group(['middleware' => 'jwt.verify'], function () {
+    Route::prefix('auth/user')->group(function (){
+        Route::delete('', 'App\Http\Controllers\UserController@doLogout');
+        Route::put('', 'App\Http\Controllers\UserController@refresh');
+        Route::get('', 'App\Http\Controllers\UserController@getUser');
+    });
 
-Route::prefix('employees')->group(function(){
-    Route::get('', 'App\Http\Controllers\EmployeeController@list');
-});
+    Route::prefix('sales')->group(function () {
+        Route::get('', 'App\Http\Controllers\SaleController@list');
 
-Route::prefix('products')->group(function(){
-    Route::get('', 'App\Http\Controllers\ProductController@list');
-});
+        Route::get('dayTotals', 'App\Http\Controllers\SaleController@getByDateRange');
+    });
 
-Route::prefix('customers')->group(function(){
-    Route::get('', 'App\Http\Controllers\CustomerController@list');
-});
+    Route::prefix('employees')->group(function(){
+        Route::get('', 'App\Http\Controllers\EmployeeController@list');
+    });
 
-Route::prefix('user')->group(function(){
-    Route::get('', 'App\Http\Controllers\UserController@getUser');
+    Route::prefix('products')->group(function(){
+        Route::get('', 'App\Http\Controllers\ProductController@list');
+    });
+
+    Route::prefix('customers')->group(function(){
+        Route::get('', 'App\Http\Controllers\CustomerController@list');
+    });
 });
 
 

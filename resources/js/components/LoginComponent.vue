@@ -86,12 +86,9 @@ export default {
             this.submitted = true;
             axios.post('/api/auth/user', params)
                 .then(response=>{
-                    console.log(response.data);
                     window.sessionStorage.accessToken = response.data.access_token;
-                    console.log(document.cookie);
                     console.log(window.sessionStorage.accessToken);
-                    //console.log('response');
-                    //window.location.href = "/";
+                    window.location.href = "/";
                 })
                 .catch(error=>{
                     this.submitted = false;

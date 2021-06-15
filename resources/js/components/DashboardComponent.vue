@@ -271,8 +271,13 @@ export default {
             }
 
             url = url.replace(/&\s*$/, "");
-            console.log(url);
-            axios.get(url)
+
+            const token = window.sessionStorage.accessToken;
+            axios.get(url, {
+                headers: {
+                    'Authorization': 'Bearer '+token
+                }
+            })
                 .then(response=>{
 
                     var sales = response.data.sales;
@@ -317,7 +322,12 @@ export default {
         },
 
         async getProducts(){
-            axios.get('/api/products')
+            const token = window.sessionStorage.accessToken;
+            axios.get('/api/products', {
+                headers: {
+                    'Authorization': 'Bearer '+token
+                }
+            })
                 .then(response=>{
                     console.log(response.data.products);
                     this.products = response.data.products;
@@ -327,7 +337,12 @@ export default {
         },
 
         async getEmployees(){
-            axios.get('/api/employees')
+            const token = window.sessionStorage.accessToken;
+            axios.get('/api/employees',{
+                headers: {
+                    'Authorization': 'Bearer '+token
+                }
+            })
                 .then(response=>{
                     this.employees = response.data.employees;
 
@@ -337,7 +352,12 @@ export default {
         },
 
         async getCustomers(){
-            axios.get('/api/customers')
+            const token = window.sessionStorage.accessToken;
+            axios.get('/api/customers',{
+                headers: {
+                    'Authorization': 'Bearer '+token
+                }
+            })
                 .then(response=>{
                     this.customers = response.data.customers;
                 }).catch(error => {
@@ -345,7 +365,12 @@ export default {
                 });
         },
         getAllSales(){
-          axios.get('/api/sales')
+            const token = window.sessionStorage.accessToken;
+          axios.get('/api/sales',{
+              headers: {
+                  'Authorization': 'Bearer '+token
+              }
+          })
               .then(response=>{
                   var sales = response.data.sales;
                   this.salesList = [];
@@ -366,7 +391,12 @@ export default {
         },
 
         async getUser(){
-            axios.get('/user')
+            const token = window.sessionStorage.accessToken;
+            axios.get('/user', {
+                headers: {
+                    'Authorization': 'Bearer '+token
+                }
+            })
                  .then(response=>{
                      this.user = response.data.user;
                  }).catch(error => {
@@ -386,7 +416,12 @@ export default {
 
             url = url.replace(/&\s*$/, "");
 
-            axios.get(url,
+            const token = window.sessionStorage.accessToken;
+            axios.get(url,{
+                    headers: {
+                        'Authorization': 'Bearer '+token
+                    }
+                }
             )
                 .then(response => {
                     var salesTotal = response.data.salesTotal;

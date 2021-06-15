@@ -278,7 +278,6 @@ export default {
                 .then(response=>{
 
                     var sales = response.data.sales;
-                    console.log(sales);
                     this.salesList = [];
                     for(var i=0;i<sales.length;i++){
                         var sale = {
@@ -326,7 +325,6 @@ export default {
                 }
             })
                 .then(response=>{
-                    console.log(response.data.products);
                     this.products = response.data.products;
                 }).catch(error => {
                     console.log(error)
@@ -395,7 +393,6 @@ export default {
                 }
             })
                  .then(response=>{
-                     console.log(response.data);
                      this.user = response.data;
                  }).catch(error => {
                     console.log(error)
@@ -424,7 +421,6 @@ export default {
                 .then(response => {
                     var salesTotal = response.data.salesTotal;
                     var sales = response.data.sales;
-                    console.log(salesTotal);
                     this.drawDashboardTable(sales);
                     this.drawSalesChart(salesTotal);
                 })
@@ -504,7 +500,6 @@ export default {
         },
 
         doLogout (){
-            console.log(window.sessionStorage.accessToken);
             const token = window.sessionStorage.accessToken;
             axios.delete('/auth/user', {
                 headers: {

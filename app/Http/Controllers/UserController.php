@@ -15,7 +15,7 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function doLogin(Request $request){
 
@@ -30,7 +30,8 @@ class UserController extends Controller
         $response = new \Illuminate\Http\Response();
 
         if (!$validated) {
-            return $response->setContent("invalid parameters");
+            return response()->json(['error'=>'invalid parameters'], 400);
+            //return $response->setContent("invalid parameters");
             //return redirect()->route('login-page', ['success'=>false, 'message'=>'invalid email or password.']); // send back the input (not the password) so that we can repopulate the form
         } else {
             $credentials = request(['email', 'password']);
